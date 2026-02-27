@@ -92,7 +92,7 @@ export const translations: Translations = {
     en: 'Last Name',
     fr: 'Nom de Famille'
   },
-  contact: {
+  contactLabel: {
     en: 'Contact',
     fr: 'Contact'
   },

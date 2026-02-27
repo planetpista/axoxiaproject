@@ -62,7 +62,7 @@ const PersonInfoForm: React.FC<PersonInfoFormProps> = ({ data, onChange, transla
       
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          {translations.contact}
+          {translations.contactLabel}
         </label>
         <input
           type="tel"
