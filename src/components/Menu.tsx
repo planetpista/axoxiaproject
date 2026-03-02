@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Home, Settings, Phone, LogIn } from 'lucide-react';
+import { X, Home, Settings, Phone, LogIn, LayoutDashboard } from 'lucide-react';
 import AuthModal from './auth/AuthModal';
 
 interface MenuProps {
