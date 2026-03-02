@@ -231,5 +231,11 @@ export const translations: Translations = {
   emailError: {
     en: 'Failed to send email. Please try again.',
     fr: 'Échec de l\'envoi de l\'email. Veuillez réessayer.'
+  },
+  
+  // Dashboard
+  dashboard: {
+    en: 'Dashboard',
+    fr: 'Tableau de Bord'
   }
 };

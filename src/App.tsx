@@ -7,6 +7,8 @@ import SettingsPage from './components/SettingsPage';
 import ContactPage from './components/ContactPage';
 import PayPalButton from './components/PayPalButton';
 import AdminDashboard from './components/admin/AdminDashboard';
+import CustomerDashboard from './components/customer/CustomerDashboard';
+import DriverDashboard from './components/driver/DriverDashboard';
 import FormSection from './components/FormSection';
 import CategorySelector from './components/CategorySelector';
 import PersonInfoForm from './components/PersonInfoForm';
@@ -19,7 +21,7 @@ import { sendShippingConfirmation } from './services/emailService';
 
 function App() {
   const [language, setLanguage] = useState<'en' | 'fr'>('en');
-  const [currentPage, setCurrentPage] = useState<'home' | 'settings' | 'contact' | 'admin'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'settings' | 'contact' | 'admin' | 'dashboard'>('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentCurrency, setCurrentCurrency] = useState<Currency>(currencies[0]); // Default to EUR
   const [showPayment, setShowPayment] = useState(false);
@@ -133,6 +135,31 @@ function App() {
     );
   }
 
+  if (currentPage === 'dashboard') {
+    if (userRole === 'admin') {
+      return (
+        <AdminDashboard
+          onLogout={handleLogout}
+          userRole={userRole}
+        />
+      );
+    } else if (userRole === 'driver') {
+      return (
+        <DriverDashboard
+          onBack={() => setCurrentPage('home')}
+          currentUser={currentUser}
+        />
+      );
+    } else {
+      return (
+        <CustomerDashboard
+          onBack={() => setCurrentPage('home')}
+          currentUser={currentUser}
+        />
+      );
+    }
+  }
+
   if (currentPage === 'settings') {
     return (
       <SettingsPage
@@ -169,6 +196,8 @@ function App() {
         onNavigate={setCurrentPage}
         currentPage={currentPage}
         onAuthSuccess={handleAuthSuccess}
+        isLoggedIn={isLoggedIn}
+        userRole={userRole}
         translations={{
           home: t('home'),
           settings: t('settings'),

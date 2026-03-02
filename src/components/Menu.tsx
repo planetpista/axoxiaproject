@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Home, Settings, Phone, LogIn } from 'lucide-react';
+import { X, Home, Settings, Phone, LogIn, BarChart3 } from 'lucide-react';
 import AuthModal from './auth/AuthModal';
 
 interface MenuProps {
@@ -9,19 +9,31 @@ interface MenuProps {
   currentPage: string;
   translations: any;
   onAuthSuccess?: (user: any) => void;
+  isLoggedIn?: boolean;
+  userRole?: string;
 }
 
-const Menu: React.FC<MenuProps> = ({ isOpen, onClose, onNavigate, currentPage, translations, onAuthSuccess }) => {
+const Menu: React.FC<MenuProps> = ({ isOpen, onClose, onNavigate, currentPage, translations, onAuthSuccess, isLoggedIn, userRole }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   if (!isOpen) return null;
 
-  const menuItems = [
+  let menuItems = [
     { id: 'home', icon: Home, key: 'home' },
     { id: 'settings', icon: Settings, key: 'settings' },
     { id: 'contact', icon: Phone, key: 'contact' },
-    { id: 'signin', icon: LogIn, key: 'signIn' }
+    { id: 'signin', icon: LogIn, key: 'signIn' },
   ];
+
+  // Add dashboard option for logged-in users
+  if (isLoggedIn) {
+    menuItems = [
+      { id: 'home', icon: Home, key: 'home' },
+      { id: 'dashboard', icon: BarChart3, key: 'dashboard' },
+      { id: 'settings', icon: Settings, key: 'settings' },
+      { id: 'contact', icon: Phone, key: 'contact' },
+    ];
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50" onClick={onClose}>
@@ -45,10 +57,10 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, onNavigate, currentPage, t
               <li key={id}>
                 <button
                   onClick={() => {
-                    if (id === 'signin') {
+                    if (id === 'signin' && !isLoggedIn) {
                       setShowAuthModal(true);
                     } else {
-                      onNavigate(id as 'home' | 'settings' | 'contact' | 'signin');
+                      onNavigate(id as any);
                       onClose();
                     }
                   }}
@@ -59,7 +71,9 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, onNavigate, currentPage, t
                   }`}
                 >
                   <Icon size={20} />
-                  <span className="font-medium">{translations[key]}</span>
+                  <span className="font-medium">
+                    {key === 'dashboard' ? 'Dashboard' : translations[key]}
+                  </span>
                 </button>
               </li>
             ))}
