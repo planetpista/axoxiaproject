@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { X, Home, Settings, Phone, LogIn, LayoutDashboard } from 'lucide-react';
+import { 
+  X, 
+  Home, 
+  Settings, 
+  Phone, 
+  LogIn, 
+  LayoutDashboard,
+  LogOut 
+} from 'lucide-react';
 import AuthModal from './auth/AuthModal';
 
 interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate: (page: 'home' | 'settings' | 'contact' | 'signin') => void;
+  onNavigate: (page: 'home' | 'settings' | 'contact' | 'signin' | 'dashboard') => void;
   currentPage: string;
   translations: any;
-  onAuthSuccess?: (user: any) => void
+  onAuthSuccess?: (user: any) => void;
   isLoggedIn: boolean;
   user?: any;
 }
@@ -20,6 +28,7 @@ const Menu: React.FC<MenuProps> = ({
   currentPage,
   translations,
   onAuthSuccess,
+  isLoggedIn,
   user
 }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -29,18 +38,19 @@ const Menu: React.FC<MenuProps> = ({
   const menuItems = [
     { id: 'home', icon: Home, key: 'home' },
     { id: 'settings', icon: Settings, key: 'settings' },
-    { id: 'contact', icon: Phone, key: 'contact' },
-    { id: 'dashboard', icon: LayoutDashboard, key: 'dashboard' },
-    { id: 'signin', icon: LogIn, key: 'signIn' }
+    { id: 'contact', icon: Phone, key: 'contact' }
   ];
 
-  if (user) {
-  menuItems.push({
-    id: 'logout',
-    icon: LogOut,
-    key: 'logout'
-  });
-}
+  if (isLoggedIn) {
+    menuItems.push(
+      { id: 'dashboard', icon: LayoutDashboard, key: 'dashboard' },
+      { id: 'logout', icon: LogOut, key: 'logout' }
+    );
+  } else {
+    menuItems.push(
+      { id: 'signin', icon: LogIn, key: 'signIn' }
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50" onClick={onClose}>
