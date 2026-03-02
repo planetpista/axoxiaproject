@@ -180,6 +180,10 @@ export const translations: Translations = {
     en: 'Home',
     fr: 'Accueil'
   },
+   layoutdashboard: {
+    en: 'Dashboaed',
+    fr: 'Tableau de bord'
+  },
   
   // Settings
   currency: {
