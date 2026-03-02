@@ -18,7 +18,8 @@ const Menu: React.FC<MenuProps> = ({
   onNavigate,
   currentPage,
   translations,
-  onAuthSuccess
+  onAuthSuccess,
+  user
 }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
