@@ -202,7 +202,8 @@ function App() {
           home: t('home'),
           settings: t('settings'),
           contact: t('contact'),
-          signIn: 'Sign in / up'
+          signIn: 'Sign in / up',
+          dashboard: t('dashboard')
         }}
       />
 
