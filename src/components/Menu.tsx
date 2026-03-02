@@ -33,6 +33,14 @@ const Menu: React.FC<MenuProps> = ({
     { id: 'signin', icon: LogIn, key: 'signIn' }
   ];
 
+  if (user) {
+  menuItems.push({
+    id: 'logout',
+    icon: LogOut,
+    key: 'logout'
+  });
+}
+
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50" onClick={onClose}>
       <div
