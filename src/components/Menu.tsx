@@ -9,6 +9,7 @@ interface MenuProps {
   currentPage: string;
   translations: any;
   onAuthSuccess?: (user: any) => void
+  isLoggedIn: boolean;
   user?: any;
 }
 
