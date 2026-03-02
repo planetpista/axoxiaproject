@@ -27,6 +27,7 @@ const Menu: React.FC<MenuProps> = ({
     { id: 'home', icon: Home, key: 'home' },
     { id: 'settings', icon: Settings, key: 'settings' },
     { id: 'contact', icon: Phone, key: 'contact' },
+    { id: 'dashboard', icon: LayoutDashboard, key: 'dashboard' },
     { id: 'signin', icon: LogIn, key: 'signIn' }
   ];
 
