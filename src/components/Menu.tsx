@@ -59,3 +59,32 @@ const Menu: React.FC<MenuProps> = ({
                       onClose();
                     }
                   }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors duration-200 ${
+                    currentPage === id
+                      ? 'bg-purple-100 text-purple-700'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <Icon size={20} />
+                  <span className="font-medium">{translations[key]}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          onSuccess={(user) => {
+            onAuthSuccess?.(user);
+            setShowAuthModal(false);
+            onClose();
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Menu;
