@@ -65,6 +65,9 @@ const Menu: React.FC<MenuProps> = ({
                   onClick={() => {
                     if (id === 'signin') {
                       setShowAuthModal(true);
+                    } else if (id === 'logout') {
+                      localStorage.removeItem("user");
+                      window.location.reload();
                     } else {
                       onNavigate(id as any);
                       onClose();
