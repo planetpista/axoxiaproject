@@ -180,7 +180,11 @@ export const translations: Translations = {
     en: 'Home',
     fr: 'Accueil'
   },
-   layoutdashboard: {
+  logout: {
+    en: 'Logout',
+    fr: 'Se Déconnecter'
+  },
+  layoutdashboard: {
     en: 'Dashboaed',
     fr: 'Tableau de bord'
   },
