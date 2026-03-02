@@ -8,7 +8,8 @@ interface MenuProps {
   onNavigate: (page: 'home' | 'settings' | 'contact' | 'signin') => void;
   currentPage: string;
   translations: any;
-  onAuthSuccess?: (user: any) => void;
+  onAuthSuccess?: (user: any) => void
+  user?: any;
 }
 
 const Menu: React.FC<MenuProps> = ({
