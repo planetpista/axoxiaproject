@@ -402,79 +402,86 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
           </div>
           
           {deliveries.length === 0 && (
-            <div className="p-12 text-center">
-              <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No deliveries assigned</h3>
-              <p className="text-gray-600">You don't have any deliveries assigned to you yet.</p>
-            </div>
+  <div className="p-12 text-center">
+    <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+    <h3 className="text-lg font-medium text-gray-900 mb-2">
+      No deliveries assigned
+    </h3>
+    <p className="text-gray-600">
+      You don't have any deliveries assigned to you yet.
+    </p>
+  </div>
+)}
+      
+{/* Delivery Management Modal */}
+{selectedDelivery && (
+  <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+    <div className="bg-white rounded-lg max-w-md w-full">
+      <div className="p-6 border-b border-gray-200">
+        <h2 className="text-xl font-bold text-gray-900">
+          Manage Delivery - {selectedDelivery.tracking_number}
+        </h2>
+      </div>
+
+      <div className="p-6 space-y-4">
+        <div>
+          <p className="text-sm text-gray-600 mb-2">
+            Current Status:
+            <span
+              className={`ml-2 inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
+                selectedDelivery.status
+              )}`}
+            >
+              {selectedDelivery.status.replace("_", " ")}
+            </span>
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {selectedDelivery.status === "assigned" && (
+            <button
+              onClick={() =>
+                updateDeliveryStatus(selectedDelivery.id, "in_transit")
+              }
+              className="w-full px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-200"
+            >
+              Start Transit
+            </button>
+          )}
+
+          {selectedDelivery.status === "in_transit" && (
+            <button
+              onClick={() =>
+                updateDeliveryStatus(selectedDelivery.id, "delivered")
+              }
+              className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
+            >
+              Mark as Delivered
+            </button>
+          )}
+
+          {(selectedDelivery.status === "assigned" ||
+            selectedDelivery.status === "in_transit") && (
+            <button
+              onClick={() =>
+                updateDeliveryStatus(selectedDelivery.id, "failed")
+              }
+              className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
+            >
+              Report Issue
+            </button>
           )}
         </div>
       </div>
-        )}
+
+      <div className="p-6 border-t border-gray-200 flex justify-end">
+        <button
+          onClick={() => setSelectedDelivery(null)}
+          className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+        >
+          Close
+        </button>
       </div>
-
-      {/* Delivery Management Modal */}
-      {selectedDelivery && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full">
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900">
-                Manage Delivery - {selectedDelivery.tracking_number}
-              </h2>
-            </div>
-            
-            <div className="p-6 space-y-4">
-              <div>
-                <p className="text-sm text-gray-600 mb-2">Current Status: 
-                  <span className={`ml-2 inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(selectedDelivery.status)}`}>
-                    {selectedDelivery.status.replace('_', ' ')}
-                  </span>
-                </p>
-              </div>
-              
-              <div className="space-y-3">
-                {selectedDelivery.status === 'assigned' && (
-                  <button
-                    onClick={() => updateDeliveryStatus(selectedDelivery.id, 'in_transit')}
-                    className="w-full px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-200"
-                  >
-                    Start Transit
-                  </button>
-                )}
-                
-                {selectedDelivery.status === 'in_transit' && (
-                  <button
-                    onClick={() => updateDeliveryStatus(selectedDelivery.id, 'delivered')}
-                    className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
-                  >
-                    Mark as Delivered
-                  </button>
-                )}
-                
-                {(selectedDelivery.status === 'assigned' || selectedDelivery.status === 'in_transit') && (
-                  <button
-                    onClick={() => updateDeliveryStatus(selectedDelivery.id, 'failed')}
-                    className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
-                  >
-                    Report Issue
-                  </button>
-                )}
-              </div>
-            </div>
-            
-            <div className="p-6 border-t border-gray-200 flex justify-end">
-              <button
-                onClick={() => setSelectedDelivery(null)}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
-  );
-};
-
-export default DriverDashboard;
+  </div>
+)}
