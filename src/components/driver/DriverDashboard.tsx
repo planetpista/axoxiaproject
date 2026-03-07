@@ -481,10 +481,8 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
           className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
         >
           Close
-        </button>
+                </button>
       </div>
-    </div>
-  </div>
     </div>
   </div>
 )}
