@@ -485,4 +485,4 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
       </div>
     </div>
   </div>
-)}
+}
