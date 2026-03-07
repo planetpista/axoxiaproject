@@ -412,7 +412,6 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
     </p>
   </div>
 )}
-
 {/* Delivery Management Modal */}
 {selectedDelivery && (
   <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
