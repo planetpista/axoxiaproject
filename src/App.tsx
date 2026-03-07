@@ -18,6 +18,7 @@ import { translations } from './utils/translations';
 import { currencies } from './utils/currencies';
 import { useShippingCalculator } from './hooks/useShippingCalculator';
 import { sendShippingConfirmation } from './services/emailService';
+import { geocodeAddress, Coordinates } from './services/locationService';
 
 function App() {
   const [language, setLanguage] = useState<'en' | 'fr'>('en');
@@ -94,6 +95,24 @@ function App() {
     e.preventDefault();
     setShowPayment(true);
   };
+
+  const handleLocationFound = (coordinates: Coordinates, address: string, field: 'sender' | 'recipient') => {
+    if (field === 'sender') {
+      updateShippingData({
+        sender: { ...shippingData.sender, address }
+      });
+    } else {
+      updateShippingData({
+        recipient: { ...shippingData.recipient, address }
+      });
+    }
+  };
+
+  const handleLocationError = (error: string) => {
+    console.error('Location error:', error);
+    // You can show a toast notification here
+  };
+
   const countries = ['Benin', 'China', 'France'];
 
   // Admin login simulation
@@ -323,7 +342,12 @@ function App() {
           </FormSection>
 
           {/* Sender Information */}
-          <FormSection title={t('sender')}>
+          <FormSection 
+            title={t('sender')}
+            showGPS={true}
+            onLocationFound={(coords, address) => handleLocationFound(coords, address, 'sender')}
+            onLocationError={handleLocationError}
+          >
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 {t('country')}
@@ -360,7 +384,12 @@ function App() {
           </FormSection>
 
           {/* Recipient Information */}
-          <FormSection title={t('recipient')}>
+          <FormSection 
+            title={t('recipient')}
+            showGPS={true}
+            onLocationFound={(coords, address) => handleLocationFound(coords, address, 'recipient')}
+            onLocationError={handleLocationError}
+          >
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 {t('country')}

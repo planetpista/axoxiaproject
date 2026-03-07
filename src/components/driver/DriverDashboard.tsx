@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Package, MapPin, Clock, CheckCircle, AlertTriangle, Navigation, User } from 'lucide-react';
+import { Package, MapPin, Clock, CheckCircle, AlertTriangle, Navigation, User, Search } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { format } from 'date-fns';
+import AvailableDeliveries from './AvailableDeliveries';
 
 interface DriverDashboardProps {
   onBack: () => void;
@@ -38,6 +39,7 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
   const [driverProfile, setDriverProfile] = useState<DriverProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedDelivery, setSelectedDelivery] = useState<Delivery | null>(null);
+  const [activeTab, setActiveTab] = useState<'available' | 'assigned'>('available');
 
   useEffect(() => {
     fetchDriverData();
@@ -195,7 +197,44 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
         </div>
       </div>
 
+      {/* Navigation Tabs */}
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex gap-2 mb-6">
+          <button
+            onClick={() => setActiveTab('available')}
+            className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+              activeTab === 'available'
+                ? 'bg-purple-600 text-white'
+                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Search size={20} />
+              Available Deliveries
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('assigned')}
+            className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+              activeTab === 'assigned'
+                ? 'bg-purple-600 text-white'
+                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Package size={20} />
+              My Deliveries ({stats.total})
+            </div>
+          </button>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Render content based on active tab */}
+        {activeTab === 'available' ? (
+          <AvailableDeliveries currentUser={currentUser} />
+        ) : (
+          <>
         {/* Driver Profile Card */}
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
           <div className="flex items-center justify-between">
@@ -370,6 +409,8 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
             </div>
           )}
         </div>
+      </div>
+        )}
       </div>
 
       {/* Delivery Management Modal */}
