@@ -411,7 +411,8 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
       You don't have any deliveries assigned to you yet.
     </p>
   </div>
-)}
+)
+}
       
 {/* Delivery Management Modal */}
 {selectedDelivery && (
