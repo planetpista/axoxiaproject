@@ -234,7 +234,7 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
         {activeTab === 'available' ? (
           <AvailableDeliveries currentUser={currentUser} />
         ) : (
-          <>
+          <div>
         {/* Driver Profile Card */}
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
           <div className="flex items-center justify-between">
@@ -400,7 +400,7 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
               </tbody>
             </table>
           </div>
-      )}
+        </div>
           
           {deliveries.length === 0 && (
   <div className="p-12 text-center">
@@ -487,7 +487,7 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ onBack, currentUser }
   </div>
 )}
 </div>
-);
+          </div>
 };
 
 export default DriverDashboard;
