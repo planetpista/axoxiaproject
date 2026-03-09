@@ -507,5 +507,62 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({
 
             <div className="p-6 space-y-4">
               <p className="text-sm text-gray-600">
-                Current Status:
-                <
+                Current Status:{" "}
+                <span
+                  className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
+                    selectedDelivery.status
+                  )}`}
+                >
+                  {selectedDelivery.status.replace("_", " ")}
+                </span>
+              </p>
+
+              <div className="space-y-2">
+                <button
+                  onClick={() =>
+                    updateDeliveryStatus(selectedDelivery.id, "in_transit")
+                  }
+                  disabled={selectedDelivery.status === "delivered"}
+                  className="w-full px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Mark as In Transit
+                </button>
+
+                <button
+                  onClick={() =>
+                    updateDeliveryStatus(selectedDelivery.id, "delivered")
+                  }
+                  disabled={selectedDelivery.status === "delivered"}
+                  className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Mark as Delivered
+                </button>
+
+                <button
+                  onClick={() =>
+                    updateDeliveryStatus(selectedDelivery.id, "failed")
+                  }
+                  disabled={selectedDelivery.status === "delivered"}
+                  className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Mark as Failed
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-gray-200 flex justify-end">
+              <button
+                onClick={() => setSelectedDelivery(null)}
+                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DriverDashboard;
