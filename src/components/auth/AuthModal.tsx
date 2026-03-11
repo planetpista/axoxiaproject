@@ -54,6 +54,25 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
     setError('');
 
     try {
+      // Check for admin credentials
+      if (formData.email === 'planetpista@gmail.com' && formData.password === 'Shalom1997') {
+        // Create mock admin user
+        const adminUser = {
+          id: 'admin-user-id',
+          email: 'planetpista@gmail.com',
+          profile: {
+            id: 'admin-user-id',
+            first_name: 'Admin',
+            last_name: 'User',
+            role: 'admin'
+          }
+        };
+        
+        onSuccess(adminUser);
+        handleClose();
+        return;
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
